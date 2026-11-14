@@ -1,18 +1,19 @@
-from abc import ABC, abstractmethod
 
-
-class Sensor(ABC):
-    def __init__(self, sensor_id):
+class Sensor:
+    def __init__(self, sensor_id, sensor_type, initial_value):
         self.sensor_id = sensor_id
+        self.sensor_type = sensor_type
+        self.value = initial_value
         self.enabled = True
 
-    @abstractmethod
     def read(self):
-        pass
+        if not self.enabled:
+            return None
 
-    @abstractmethod
-    def simulate(self):
-        pass
+        return self.value
+
+    def set_value(self, value):
+        self.value = value
 
     def enable(self):
         self.enabled = True

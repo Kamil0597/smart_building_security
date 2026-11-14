@@ -8,17 +8,14 @@ class SensorManager:
     def add_sensor(self, sensor):
         self.sensors[sensor.sensor_id] = sensor
 
-    def simulate_all(self):
-        for sensor in self.sensors.values():
-            sensor.simulate()
-
     def read_all(self):
-        readings = {}
+        return {
+            sensor_id: sensor.read()
+            for sensor_id, sensor in self.sensors.items()
+        }
 
-        for sensor_id, sensor in self.sensors.items():
-            readings[sensor_id] = sensor.read()
-
-        return readings
+    def get_sensor(self, sensor_id):
+        return self.sensors.get(sensor_id)
 
     def arm(self):
         self.armed = True
@@ -30,17 +27,21 @@ class SensorManager:
         return self.armed
 
     def enable_sensor(self, sensor_id):
-        if sensor_id not in self.sensors:
+        sensor = self.get_sensor(sensor_id)
+
+        if sensor is None:
             return False
 
-        self.sensors[sensor_id].enable()
+        sensor.enable()
         return True
 
     def disable_sensor(self, sensor_id):
-        if sensor_id not in self.sensors:
+        sensor = self.get_sensor(sensor_id)
+
+        if sensor is None:
             return False
 
-        self.sensors[sensor_id].disable()
+        sensor.disable()
         return True
 
     def block_sensor(self, sensor_id):
