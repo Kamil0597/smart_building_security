@@ -13,6 +13,7 @@ Komunikacja między modułem bezpieczeństwa a panelem internetowym odbywa się 
 | `building/sensors` | Security → Dashboard | Odczyty czujników |
 | `building/alerts` | Security → Dashboard | Informacje o alarmach |
 | `building/status` | Security → Dashboard | Aktualny stan systemu |
+| `building/responses` | Security → Dashboard | Potwierdzenia poleceń |
 | `building/commands/alarm` | Dashboard → Security | Sterowanie alarmami |
 | `building/commands/mode` | Dashboard → Security | Zmiana trybu pracy |
 | `building/commands/sensor` | Dashboard → Security | Włączanie i wyłączanie czujników |
@@ -68,6 +69,28 @@ Temat: `building/status`
   "disabled_sensors": []
 }
 ```
+
+### Potwierdzenia poleceń
+
+Temat: `building/responses`
+
+Po wykonaniu polecenia system wysyła potwierdzenie jego realizacji oraz aktualny stan systemu.
+
+```json
+{
+  "command_id": "cmd_001",
+  "success": true,
+  "mode": "home",
+  "armed": false,
+  "active_alarms": [],
+  "blocked_sensors": [],
+  "disabled_sensors": []
+}
+```
+
+- `command_id` – identyfikator otrzymanego polecenia.
+- `success` – informacja, czy polecenie zostało wykonane poprawnie.
+- Pozostałe pola – aktualny stan systemu po wykonaniu polecenia.
 
 ## 3. Wiadomości odbierane przez Security Module
 
